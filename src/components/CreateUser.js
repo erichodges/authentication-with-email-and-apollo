@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router'
+import { graphql, gql } from 'react-apollo'
 
 class CreateUser extends React.Component {
 
@@ -46,10 +47,29 @@ class CreateUser extends React.Component {
     )
   }
 
-  createUser = async () => {
+    createUser = async () => {
+    const { email, password, name } = this.state
+
+    try {
+      const response = await this.props.signupUserMutation({variables: {email, password, name}})
+      localStorage.setItem('graphcoolToken', response.data.signupUser.token)
+      this.props.history.push('/')
+    } catch (e) {
+      console.error('An error occured: ', e)
+      this.props.history.push('/')
+    }
 
   }
 
 }
 
-export default withRouter(CreateUser)
+const SIGNUP_EMAIL_USER = gql`
+  mutation SignupUser($email: String!, $password: String!, $name: String) {
+    signupUser(email: $email, password: $password, name: $name) {
+      id
+      token
+    }
+  }
+`
+
+export default graphql(SIGNUP_EMAIL_USER, {name: 'signupUserMutation'})(withRouter(CreateUser))
