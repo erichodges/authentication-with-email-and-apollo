@@ -13,7 +13,7 @@ import LoginUser from './components/LoginUser'
 import 'tachyons'
 
 // __SIMPLE_API_ENDPOINT__ looks like: 'https://api.graph.cool/simple/v1/__SERVICE_ID__'
-const httpLink = createHttpLink({ uri: 'https://api.graph.cool/simple/v1/cjazmytmu00040141lxx6ywgt' })
+const httpLink = createHttpLink({ uri: 'https://api.graph.cool/simple/v1/cjax3rfxo0prm01426vyoyplj' })
 
 const middlewareLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem('graphcoolToken')
@@ -28,7 +28,7 @@ const middlewareLink = new ApolloLink((operation, forward) => {
 
 const httpLinkWithAuthToken = middlewareLink.concat(httpLink)
 
-const client = new ApolloClient({ 
+const client = new ApolloClient({
   link: httpLinkWithAuthToken,
   cache: new InMemoryCache().restore(window.__APOLLO_STATE__),
 })

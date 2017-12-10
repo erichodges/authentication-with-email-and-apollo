@@ -29,6 +29,7 @@ class CreatePost extends React.Component {
             onChange={(e) => this.setState({imageUrl: e.target.value})}
           />
           {this.state.imageUrl &&
+            // eslint-disable-next-line
             <img src={this.state.imageUrl} role='presentation' className='w-100 mv3' />
           }
           {this.state.description && this.state.imageUrl &&
